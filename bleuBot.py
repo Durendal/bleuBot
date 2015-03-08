@@ -237,6 +237,8 @@ class bleuBot:
 		self.setBaseURL()
 		self.setURL(self.getURL() + query)
 		result = self.getRequest()
+		emptyDict = {}
+		self.setParams(emptyDict)
 		return result
 
 	def makePrivateAPICall(self, query):
@@ -246,6 +248,8 @@ class bleuBot:
 		sign = hmac.new(self.getAPISecret(), self.formHashURL(), hashlib.sha512).hexdigest()
 		headers = { "apisign" : sign }
 		result = self.getRequest(headers)
+		emptyDict = {}
+		self.setParams(emptyDict)
 		return result		
 
 	def formHashURL(self):
