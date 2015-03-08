@@ -130,3 +130,4 @@ Member Variables:
 	_params - a dictionary of parameters for each request
 	_apiKey - the API Key for your bleutrade user account
 	_apiSecret - the API Secret for your bleutrade user account
+	_nonce - Values: True or False, indicates whether or not to use a nonce on private API calls
