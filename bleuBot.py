@@ -6,7 +6,7 @@ import hashlib
 class bleuBot:
 
 	# Constructor
-	def __init__(self, apikey, apisecret, baseurl = "https://bleutrade.com/api/v2/"):
+	def __init__(self, apikey = None, apisecret = None, baseurl = "https://bleutrade.com/api/v2/"):
 		self._url = ""
 		self._baseurl = baseurl
 		self._params = {}
@@ -44,15 +44,18 @@ class bleuBot:
 		return self._baseurl
 
 	# Requests (GET and POST)
-	def getRequest(self, headers=None):
+	def getRequest(self, headers = None):
 		if headers != None:
 			r = requests.get(self.getURL(), params = self.getParams(), headers = headers)
 		else:
 			r = requests.get(self.getURL(), params = self.getParams())
 		return r.json()
 
-	def postRequest(self):
-		r = requests.post(self.getURL(), params = self.getParams())
+	def postRequest(self, headers = None):
+		if headers != None:
+			r = requests.post(self.getURL(), params = self.getParams(), headers = headers)
+		else:
+			r = requests.post(self.getURL(), params = self.getParams())
 		return r.json()
 
 
@@ -241,8 +244,13 @@ class bleuBot:
 		self.setParams(emptyDict)
 		return result
 
-	def makePrivateAPICall(self, query):
+	def makePrivateAPICall(self, query, nonce = None):
+		if self._apiSecret == None or self._apiKey == None:
+			print "You must set a valid API Key and API Secret to make private API Calls"
+			return None
 		self.setBaseURL()
+		if nonce != None:
+			self._params['nonce'] = nonce
 		self._params['apikey'] = self.getAPIKey()
 		self.setURL(self.getURL() + query)
 		sign = hmac.new(self.getAPISecret(), self.formHashURL(), hashlib.sha512).hexdigest()
