@@ -115,7 +115,7 @@ Member Functions:
 	makePublicAPICall(query)
 		handles making the actual API request, used for public requests. 
 
-	makePrivateAPICall(query, nonce = None)
+	makePrivateAPICall(query)
 		handles making the actual API request, used for private requests. 
 
 	formHashURL()

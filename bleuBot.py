@@ -2,16 +2,18 @@ import requests
 import json
 import hmac
 import hashlib
+import time
 
 class bleuBot:
 
 	# Constructor
-	def __init__(self, apikey = None, apisecret = None, baseurl = "https://bleutrade.com/api/v2/"):
+	def __init__(self, apikey = None, apisecret = None, nonce = False, baseurl = "https://bleutrade.com/api/v2/"):
 		self._url = ""
 		self._baseurl = baseurl
 		self._params = {}
 		self._apiKey = apikey
 		self._apiSecret = apisecret
+		self._nonce = nonce
 		self.setBaseURL()
 
 
@@ -244,13 +246,13 @@ class bleuBot:
 		self.setParams(emptyDict)
 		return result
 
-	def makePrivateAPICall(self, query, nonce = None):
+	def makePrivateAPICall(self, query):
 		if self._apiSecret == None or self._apiKey == None:
 			print "You must set a valid API Key and API Secret to make private API Calls"
 			return None
 		self.setBaseURL()
-		if nonce != None:
-			self._params['nonce'] = nonce
+		if self._nonce == True:
+			self._params['nonce'] = int(time.time())
 		self._params['apikey'] = self.getAPIKey()
 		self.setURL(self.getURL() + query)
 		sign = hmac.new(self.getAPISecret(), self.formHashURL(), hashlib.sha512).hexdigest()
