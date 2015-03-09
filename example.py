@@ -33,5 +33,8 @@ def main():
 	#	json.dump(orderBook, writeFile)
 	
 
+	# Donate to the developer :D, feel free to modify currency or value
+	# transferToDurendal = bleubot.transfer("LTC", "1", "Durendal")
+
 if __name__ == '__main__':
 	main()
