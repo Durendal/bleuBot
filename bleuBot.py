@@ -374,7 +374,7 @@ class bleuBot:
 		returnURL = self.getURL() + "?"
 		# Generate a url with GET parameters in it, to be used in hashing the sign
 		for key, value in self._params.iteritems():
-			returnURL += key + "=" + value + "&"
+			returnURL += key + "=" + str(value) + "&"
 		# Trim trailing &
 		returnURL = returnURL[:-1]
 		return returnURL
