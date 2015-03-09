@@ -320,7 +320,7 @@ class bleuBot:
 	# return: result
 	def _makePublicAPICall(self, query):
 		# Set _url to the base URL
-		self.setBaseURL()
+		self._setBaseURL()
 
 		# Update the URL to include query
 		self._setURL(self.getURL() + query)
@@ -343,7 +343,7 @@ class bleuBot:
 			return None
 
 		# Set _url to the base URL
-		self.setBaseURL()
+		self._setBaseURL()
 		
 		# Check if user has selected to use a nonce
 		if self._nonce == True:
