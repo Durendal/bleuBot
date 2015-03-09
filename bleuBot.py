@@ -13,14 +13,14 @@ class bleuBot:
 		self._apiKey = apikey
 		self._apiSecret = apisecret
 		self._nonce = nonce
-		self.setBaseURL()
+		self._setBaseURL()
 
 
 	# Setters
-	def setURL(self, url):
+	def _setURL(self, url):
 		self._url = url
 
-	def setParams(self, params):
+	def _setParams(self, params):
 		self._params = params
 
 	# Getters
@@ -45,14 +45,14 @@ class bleuBot:
 		return self._baseurl
 
 	# Requests (GET and POST)
-	def getRequest(self, headers = None):
+	def _getRequest(self, headers = None):
 		if headers != None:
 			r = requests.get(self.getURL(), params = self.getParams(), headers = headers)
 		else:
 			r = requests.get(self.getURL(), params = self.getParams())
 		return r.json()
 
-	def postRequest(self, headers = None):
+	def _postRequest(self, headers = None):
 		if headers != None:
 			r = requests.post(self.getURL(), params = self.getParams(), headers = headers)
 		else:
@@ -60,8 +60,8 @@ class bleuBot:
 		return r.json()
 
 
-	def setBaseURL(self):
-		self.setURL(self._baseurl)
+	def _setBaseURL(self):
+		self._setURL(self._baseurl)
 
 
 	# BleuTrade functions adapted from beefviper @ http://forum.bleutrade.com/index.php/topic,213.0.html
@@ -72,8 +72,8 @@ class bleuBot:
 	def getCurrencies(self):
 		query = "public/getcurrencies"
 		params = {}
-		self.setParams(params)
-		result = self.makePublicAPICall(query)
+		self._setParams(params)
+		result = self._makePublicAPICall(query)
 		return result
 	
 	# 'public/getmarkets': Get the list of all pairs traded
@@ -82,8 +82,8 @@ class bleuBot:
 	def getMarkets(self):
 		query = "public/getmarkets"
 		params = {}
-		self.setParams(params)
-		result = self.makePublicAPICall(query)
+		self._setParams(params)
+		result = self._makePublicAPICall(query)
 		return result
 
 	# 'public/getticker': Used to get the current tick values for a market
@@ -92,8 +92,8 @@ class bleuBot:
 	def getTicker(self, market):
 		query = "public/getticker"
 		params = { "market" : market }
-		self.setParams(params)
-		result = self.makePublicAPICall(query)
+		self._setParams(params)
+		result = self._makePublicAPICall(query)
 		return result
 
 	# 'public/getmarketsummaries': Used to get the last 24 hour summary of all active markets
@@ -102,8 +102,8 @@ class bleuBot:
 	def getMarketSummaries(self):
 		query = "public/getmarketsummaries"
 		params = {}
-		self.setParams(params)
-		result = self.makePublicAPICall(query)
+		self._setParams(params)
+		result = self._makePublicAPICall(query)
 		return result
 
 	# 'public/getmarketsummary': Used to get the last 24 hour summary of specific market
@@ -112,8 +112,8 @@ class bleuBot:
 	def getMarketSummary(self, market):
 		query = "public/getmarketsummary"
 		params = { "market" : market }
-		self.setParams(params)
-		result = self.makePublicAPICall(query)
+		self._setParams(params)
+		result = self._makePublicAPICall(query)
 		return result
 
 	# 'public/getorderbook': Loads the book offers specific market.
@@ -128,8 +128,8 @@ class bleuBot:
 					"type" : rType,
 					"count" : depth
 				}
-		self.setParams(params)
-		result = self.makePublicAPICall(query)
+		self._setParams(params)
+		result = self._makePublicAPICall(query)
 		return result
 
 	# 'public/getmarkethistory': Obtains historical trades of a specific market
@@ -142,8 +142,8 @@ class bleuBot:
 					"market" : market,
 					"count" : count
 				 }
-		self.setParams(params)
-		result = self.makePublicAPICall(query)
+		self._setParams(params)
+		result = self._makePublicAPICall(query)
 		return result
 	
 	# 'public/getcandles': Obtains candles format historical trades of a specific market
@@ -160,8 +160,8 @@ class bleuBot:
 					"count" : count,
 					"lasthours" : lasthours
 				 }
-		self.setParams(params)
-		result = self.makePublicAPICall(query)
+		self._setParams(params)
+		result = self._makePublicAPICall(query)
 		return result
 
 	# 'market/buylimit': Use to send BUY orders
@@ -178,8 +178,8 @@ class bleuBot:
 					"quantity" : quantity,
 					"comments" : comments
 				 }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# 'market/selllimit': Use to send SELL orders
@@ -205,8 +205,8 @@ class bleuBot:
 	def cancel(self, orderid):
 		query = "market/cancel"
 		params = { "orderid" : orderid }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# 'market/getopenorders': Use to list your open orders
@@ -215,8 +215,8 @@ class bleuBot:
 	def getOpenOrders(self):
 		query = "market/getopenorders"
 		params = {}
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# 'account/getbalances': Use to get the balance of all your coins
@@ -225,8 +225,8 @@ class bleuBot:
 	def getBalances(self):
 		query = "account/getbalances"
 		params = {}
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# 'account/getbalance': Use to get the balance of a specific currency 
@@ -235,8 +235,8 @@ class bleuBot:
 	def getBalance(self, currency):
 		query = "account/getbalance"
 		params = { "currency" : currency }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# 'account/getdepositaddress': Use to get the deposit address of specific coin
@@ -245,8 +245,8 @@ class bleuBot:
 	def getDepositAddress(self, currency):
 		query = "account/getdepositaddress"
 		params = { "currency" : currency }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 	
 	# 'account/withdraw': Use to withdraw their currencies to another wallet
@@ -261,8 +261,8 @@ class bleuBot:
 					"quantity" : quantity,
 					"address" : address
 				 }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# 'account/transfer': Use to direct transfer their currencies to another user, without fees
@@ -277,8 +277,8 @@ class bleuBot:
 					"quantity" : quantity,
 					"touser" : touser
 				 }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# 'account/getorder': Use to get the data given order
@@ -287,8 +287,8 @@ class bleuBot:
 	def getOrder(self, orderid):
 		query = "account/getorder"
 		params = { "orderid" : orderid }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# account/getorders - Use to list your orders
@@ -301,8 +301,8 @@ class bleuBot:
 					"market" : market,
 					"orderstatus" : orderstatus
 				 }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# account/getorderhistory - Use for historical trades of a given order.
@@ -311,32 +311,32 @@ class bleuBot:
 	def getOrderHistory(self, orderid):
 		query = "account/getorderhistory"
 		params = { "orderid" : orderid }
-		self.setParams(params)
-		result = self.makePrivateAPICall(query)
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
 		return result
 
 	# 'make_public_api_call': takes constructed query and calls public api
 	# params: query
 	# return: result
-	def makePublicAPICall(self, query):
+	def _makePublicAPICall(self, query):
 		# Set _url to the base URL
 		self.setBaseURL()
 
 		# Update the URL to include query
-		self.setURL(self.getURL() + query)
+		self._setURL(self.getURL() + query)
 		
-		result = self.getRequest()
+		result = self._getRequest()
 		
 		# Clear the parameter list
 		emptyDict = {}
-		self.setParams(emptyDict)
+		self._setParams(emptyDict)
 		
 		return result
 
 	# 'make_private_api_call': takes constructed query and calls private api
 	# params: query
 	# return: result
-	def makePrivateAPICall(self, query):
+	def _makePrivateAPICall(self, query):
 		# Verify that API Key and Secret are available
 		if self._apiSecret == None or self._apiKey == None:
 			print "You must set a valid API Key and API Secret to make private API Calls"
@@ -353,23 +353,23 @@ class bleuBot:
 		self._params['apikey'] = self.getAPIKey()
 
 		# Update the URL to include query
-		self.setURL(self.getURL() + query)
+		self._setURL(self.getURL() + query)
 
 		# Generate the apisign
-		sign = hmac.new(self.getAPISecret(), self.formHashURL(), hashlib.sha512).hexdigest()
+		sign = hmac.new(self.getAPISecret(), self._formHashURL(), hashlib.sha512).hexdigest()
 		
 		# Add custom header
 		headers = { "apisign" : sign }
 		
-		result = self.getRequest(headers)
+		result = self._getRequest(headers)
 		
 		# Clear the parameter list
 		emptyDict = {}
-		self.setParams(emptyDict)
+		self._setParams(emptyDict)
 
 		return result		
 
-	def formHashURL(self):
+	def _formHashURL(self):
 		
 		returnURL = self.getURL() + "?"
 		# Generate a url with GET parameters in it, to be used in hashing the sign

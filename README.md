@@ -22,10 +22,10 @@ https://bleutrade.com/help/API - official API Documentation
 Member Functions:
 =================
 
-	setURL(url)
+	_setURL(url)
 		sets the URL for the next request
 
-	setParams(params)
+	_setParams(params)
 		sets the parameters for the request(used in GET and POST requests)
 
 	getURL()
@@ -43,13 +43,13 @@ Member Functions:
 	getBaseURL()
 		returns the base URL for bleutrade API requests: https://bleutrade.com/api/v2/
 
-	getRequest(headers=None)
+	_getRequest(headers=None)
 		performs a GET based HTTP request and returns the result in json format
 
-	postRequest(headers=None)
+	_postRequest(headers=None)
 		performs a POST based HTTP request and returns the result in json format
 
-	setBaseURL()
+	_setBaseURL()
 		sets _url to _baseurl
 
 	getCurrencies()
@@ -112,13 +112,13 @@ Member Functions:
 	getOrderHistory(orderid)
 		returns data of historical trades in a given order in json format
 
-	makePublicAPICall(query)
+	_makePublicAPICall(query)
 		handles making the actual API request, used for public requests. 
 
-	makePrivateAPICall(query)
+	_makePrivateAPICall(query)
 		handles making the actual API request, used for private requests. 
 
-	formHashURL()
+	_formHashURL()
 		generates the URL needed to make the apisign header
 
 =================
