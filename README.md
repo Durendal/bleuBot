@@ -43,10 +43,10 @@ Member Functions:
 	getBaseURL()
 		returns the base URL for bleutrade API requests: https://bleutrade.com/api/v2/
 
-	_getRequest(headers=None)
+	_getRequest(headers = None)
 		performs a GET based HTTP request and returns the result in json format
 
-	_postRequest(headers=None)
+	_postRequest(headers = None)
 		performs a POST based HTTP request and returns the result in json format
 
 	_setBaseURL()
