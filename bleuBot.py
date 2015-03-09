@@ -252,7 +252,7 @@ class bleuBot:
 			return None
 		self.setBaseURL()
 		if self._nonce == True:
-			self._params['nonce'] = int(time.time())
+			self._params['nonce'] = string(int(time.time()))
 		self._params['apikey'] = self.getAPIKey()
 		self.setURL(self.getURL() + query)
 		sign = hmac.new(self.getAPISecret(), self.formHashURL(), hashlib.sha512).hexdigest()
