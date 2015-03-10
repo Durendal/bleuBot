@@ -13,7 +13,7 @@ class bleuBot:
 		self._apiKey = apikey
 		self._apiSecret = apisecret
 		self._nonce = nonce
-		self._setBaseURL()
+		self._resetURL()
 
 
 	# Setters
@@ -26,7 +26,7 @@ class bleuBot:
 		self._params = params
 
 	# Resets _url to _baseurl
-	def _setBaseURL(self):
+	def _resetURL(self):
 		self._setURL(self._baseurl)
 
 	# Make request and return result as a json encoded object.
@@ -42,7 +42,7 @@ class bleuBot:
 	# return: result
 	def _makePublicAPICall(self, query):
 		# Set _url to the base URL
-		self._setBaseURL()
+		self._resetURL()
 
 		# Update the URL to include query
 		self._setURL(self.getURL() + query)
@@ -65,7 +65,7 @@ class bleuBot:
 			return None
 
 		# Set _url to the base URL
-		self._setBaseURL()
+		self._resetURL()
 		
 		# Check if user has selected to use a nonce
 		if self._nonce == True:

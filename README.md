@@ -33,6 +33,21 @@ Member Functions:
 	_setParams(params)
 		sets the parameters for the request(used in GET and POST requests)
 
+	_resetURL()
+		sets _url to _baseurl
+
+	_getRequest(headers = None)
+		performs a GET based HTTP request and returns the result in json format
+
+	_makePublicAPICall(query)
+		handles making the actual API request, used for public requests. 
+
+	_makePrivateAPICall(query)
+		handles making the actual API request, used for private requests. 
+
+	_formHashURL()
+		generates the URL needed to make the apisign header
+
 	getURL()
 		returns the currently set URL
 
@@ -47,15 +62,6 @@ Member Functions:
 
 	getBaseURL()
 		returns the base URL for bleutrade API requests: https://bleutrade.com/api/v2/
-
-	_getRequest(headers = None)
-		performs a GET based HTTP request and returns the result in json format
-
-	_postRequest(headers = None)
-		performs a POST based HTTP request and returns the result in json format
-
-	_setBaseURL()
-		sets _url to _baseurl
 
 	getCurrencies()
 		returns a list of all coins traded in json format
@@ -117,14 +123,6 @@ Member Functions:
 	getOrderHistory(orderid)
 		returns data of historical trades in a given order in json format
 
-	_makePublicAPICall(query)
-		handles making the actual API request, used for public requests. 
-
-	_makePrivateAPICall(query)
-		handles making the actual API request, used for private requests. 
-
-	_formHashURL()
-		generates the URL needed to make the apisign header
 
 =================
 Member Variables:
