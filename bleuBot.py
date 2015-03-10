@@ -17,11 +17,89 @@ class bleuBot:
 
 
 	# Setters
+	# Set URL to use for the next request
 	def _setURL(self, url):
 		self._url = url
 
+	# Set Parameters to use for the next request
 	def _setParams(self, params):
 		self._params = params
+
+	# Resets _url to _baseurl
+	def _setBaseURL(self):
+		self._setURL(self._baseurl)
+
+	# Make request and return result as a json encoded object.
+	def _getRequest(self, headers = None):
+		if headers != None:
+			r = requests.get(self.getURL(), params = self.getParams(), headers = headers)
+		else:
+			r = requests.get(self.getURL(), params = self.getParams())
+		return r.json()
+
+	# 'make_public_api_call': takes constructed query and calls public api
+	# params: query
+	# return: result
+	def _makePublicAPICall(self, query):
+		# Set _url to the base URL
+		self._setBaseURL()
+
+		# Update the URL to include query
+		self._setURL(self.getURL() + query)
+		
+		result = self._getRequest()
+		
+		# Clear the parameter list
+		emptyDict = {}
+		self._setParams(emptyDict)
+		
+		return result
+
+	# 'make_private_api_call': takes constructed query and calls private api
+	# params: query
+	# return: result
+	def _makePrivateAPICall(self, query):
+		# Verify that API Key and Secret are available
+		if self._apiSecret == None or self._apiKey == None:
+			print "You must set a valid API Key and API Secret to make private API Calls"
+			return None
+
+		# Set _url to the base URL
+		self._setBaseURL()
+		
+		# Check if user has selected to use a nonce
+		if self._nonce == True:
+			self._params['nonce'] = string(int(time.time()))
+
+		# Add API Key to parameter list
+		self._params['apikey'] = self.getAPIKey()
+
+		# Update the URL to include query
+		self._setURL(self.getURL() + query)
+
+		# Generate the apisign
+		sign = hmac.new(self.getAPISecret(), self._formHashURL(), hashlib.sha512).hexdigest()
+		
+		# Add custom header
+		headers = { "apisign" : sign }
+		
+		result = self._getRequest(headers)
+		
+		# Clear the parameter list
+		emptyDict = {}
+		self._setParams(emptyDict)
+
+		return result		
+
+	def _formHashURL(self):
+		
+		returnURL = self.getURL() + "?"
+		# Generate a url with GET parameters in it, to be used in hashing the sign
+		for key, value in self._params.iteritems():
+			returnURL += key + "=" + str(value) + "&"
+		# Trim trailing &
+		returnURL = returnURL[:-1]
+		return returnURL
 
 	# Getters
 	def getURL(self):
@@ -43,26 +121,6 @@ class bleuBot:
 	def getBaseURL(self):
 		
 		return self._baseurl
-
-	# Requests (GET and POST)
-	def _getRequest(self, headers = None):
-		if headers != None:
-			r = requests.get(self.getURL(), params = self.getParams(), headers = headers)
-		else:
-			r = requests.get(self.getURL(), params = self.getParams())
-		return r.json()
-
-	def _postRequest(self, headers = None):
-		if headers != None:
-			r = requests.post(self.getURL(), params = self.getParams(), headers = headers)
-		else:
-			r = requests.post(self.getURL(), params = self.getParams())
-		return r.json()
-
-
-	def _setBaseURL(self):
-		self._setURL(self._baseurl)
-
 
 	# BleuTrade functions adapted from beefviper @ http://forum.bleutrade.com/index.php/topic,213.0.html
 	
@@ -314,67 +372,3 @@ class bleuBot:
 		self._setParams(params)
 		result = self._makePrivateAPICall(query)
 		return result
-
-	# 'make_public_api_call': takes constructed query and calls public api
-	# params: query
-	# return: result
-	def _makePublicAPICall(self, query):
-		# Set _url to the base URL
-		self._setBaseURL()
-
-		# Update the URL to include query
-		self._setURL(self.getURL() + query)
-		
-		result = self._getRequest()
-		
-		# Clear the parameter list
-		emptyDict = {}
-		self._setParams(emptyDict)
-		
-		return result
-
-	# 'make_private_api_call': takes constructed query and calls private api
-	# params: query
-	# return: result
-	def _makePrivateAPICall(self, query):
-		# Verify that API Key and Secret are available
-		if self._apiSecret == None or self._apiKey == None:
-			print "You must set a valid API Key and API Secret to make private API Calls"
-			return None
-
-		# Set _url to the base URL
-		self._setBaseURL()
-		
-		# Check if user has selected to use a nonce
-		if self._nonce == True:
-			self._params['nonce'] = string(int(time.time()))
-
-		# Add API Key to parameter list
-		self._params['apikey'] = self.getAPIKey()
-
-		# Update the URL to include query
-		self._setURL(self.getURL() + query)
-
-		# Generate the apisign
-		sign = hmac.new(self.getAPISecret(), self._formHashURL(), hashlib.sha512).hexdigest()
-		
-		# Add custom header
-		headers = { "apisign" : sign }
-		
-		result = self._getRequest(headers)
-		
-		# Clear the parameter list
-		emptyDict = {}
-		self._setParams(emptyDict)
-
-		return result		
-
-	def _formHashURL(self):
-		
-		returnURL = self.getURL() + "?"
-		# Generate a url with GET parameters in it, to be used in hashing the sign
-		for key, value in self._params.iteritems():
-			returnURL += key + "=" + str(value) + "&"
-		# Trim trailing &
-		returnURL = returnURL[:-1]
-		return returnURL
