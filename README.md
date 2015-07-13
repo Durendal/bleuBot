@@ -5,6 +5,12 @@ Donations are appreciated :)
 
 	BTC: 1GicRCkw8EigtNdFwfTR6cFxM7uA8nNwbd
 	LTC: LMzNLYqu1AKyvdwbdHjNZgkjAALKFJvpMB
+	
+=============
+Special Thanks:
+=============
+Contributors:
+	salfter - https://github.com/salfter/
 
 =============
 Dependencies:
