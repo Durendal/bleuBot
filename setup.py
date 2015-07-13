@@ -12,7 +12,7 @@ setup(
     version='0.1',
     description='Python binding to the BleuTrade API',
     long_description=read('README.md'),
-    url='https://github.com/salfter/bleuBot',
+    url='https://github.com/Durendal/bleuBot',
     py_modules=['bleuBot'],
     zip_safe=False,
     classifiers=[
