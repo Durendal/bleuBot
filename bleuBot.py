@@ -372,3 +372,34 @@ class bleuBot:
 		self._setParams(params)
 		result = self._makePrivateAPICall(query)
 		return result
+
+	# account/getdeposithistory - Use for historical deposits and received direct transfers
+	# params: none
+	# return: JSON
+	def getDepositHistory(self):
+		query = "account/getdeposithistory"
+		params = {}
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
+		return result
+
+	# account/getwithdrawhistory - Use for historical withdraw and sent direct transfers
+	# params: none
+	# return: JSON
+	def getWithdrawHistory(self):
+		query = "account/getwithdrawhistory"
+		params = {}
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
+		return result
+
+	# account/getdeposithistory - Use to send texts to chat
+	# params: channel: string (EN, PT, etc)
+	#		  text: string
+	# return: JSON
+	def chatSend(self, channel, text):
+		query = "account/chatsend"
+		params = {"channel" : channel, "text" : text}
+		self._setParams(params)
+		result = self._makePrivateAPICall(query)
+		return result
