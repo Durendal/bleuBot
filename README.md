@@ -130,6 +130,14 @@ Member Functions:
 	getOrderHistory(orderid)
 		returns data of historical trades in a given order in json format
 
+	getDepositHistory()
+		returns data of historical deposits and received direct transfers
+	
+	getWithdrawHistory()
+		returns data of historical withdraw and sent direct transfers
+	
+	chatSend(channel, text)
+		Use to send texts to chat
 
 =================
 Member Variables:
